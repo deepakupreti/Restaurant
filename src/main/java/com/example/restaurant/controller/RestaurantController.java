@@ -1,5 +1,7 @@
 package com.example.restaurant.controller;
 
+import com.example.restaurant.aop.annotations.EntryOnController;
+import com.example.restaurant.aop.annotations.LogExecutionTime;
 import com.example.restaurant.constants.Status;
 import com.example.restaurant.model.response.BaseResponse;
 import com.example.restaurant.model.response.RestaurantResponse;
@@ -28,6 +30,8 @@ public class RestaurantController {
 
     // to get list of restaurants given pincode
     @GetMapping(value = "/getRestaurants", produces = MediaType.APPLICATION_JSON_VALUE)
+    @LogExecutionTime(methodName = "restaurant_method")
+    @EntryOnController(methodName = "restaurant_entry")
     public ResponseEntity<BaseResponse<List<RestaurantResponse>>>getRestaurant(
             @RequestParam
             @Pattern(regexp = "^[1-9][0-9]{5}$", message = "INVALID PINCODE") String pincode
